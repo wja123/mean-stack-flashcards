@@ -1,3 +1,5 @@
+'use strict';
+
 (function($){
   $(function(){
 
@@ -5,3 +7,7 @@
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
+
+var app = angular.module("myApp",["ui.router"]);
+
+console.log("module works");
