@@ -49,6 +49,16 @@ router.post('/', function(req, res) {
     });
 });
 
+router.delete('/:id', function(req,res){
+  db.query('DELETE FROM user WHERE?', {id:req.params.id}, function(err,result){
+    if(err){
+      res.status(400).send(err);
+      return;
+    }
+    res.send(result);
+  });
+});
+
 router.put('/', function(req, res) {
     console.log('req.body:', req.body);
     var queryString = 'UPDATE user SET score='+req.body.score+' WHERE id='+req.body.id;
