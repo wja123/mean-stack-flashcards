@@ -12,11 +12,20 @@ router.get('/',function(req,res,next){
       res.status(400).send(err);
       return;
     }
-    console.log("row: ", row);
-    console.log("fields: ", fields);
+    console.log(req);
     res.send(row);
   });
+});
 
+router.get('/:id',function(req,res,next){
+  db.query('SELECT * FROM questions WHERE ?', {id:req.params.id}, function(err,row,fields){
+    if(err){
+      res.status(400).send(err);
+      return;
+    }
+    console.log(req);
+    res.send(row);
+  });
 });
 
 router.post('/',function(req,res,next){
@@ -28,7 +37,6 @@ router.post('/',function(req,res,next){
     console.log("result: ", result);
     res.send(result);
   });
-
 });
 
 router.get('/categories',function(req,res,next){
@@ -40,11 +48,16 @@ router.get('/categories',function(req,res,next){
     console.log("row: ", row);
     res.send(row);
   });
-
 });
 
-router.delete('/:id',function(req,res,next){
-  db.query('DELETE FROM questions WHERE', {id:req.params.id}, function(err,result){
+router.put('/:id',function(req,res,next){
+  var updateString = "UPDATE questions SET category ='" + 
+  req.body.category + "',question ='" + 
+  req.body.question +"', hint='" + 
+  req.body.hint +"', answer='" + req.body.answer +"' WHERE id='" + req.params.id +"'";
+
+  console.log(updateString);
+  db.query(updateString, function(err,result){
     if(err){
       res.status(400).send(err);
       return;
@@ -52,7 +65,26 @@ router.delete('/:id',function(req,res,next){
     console.log("result: ", result);
     res.send(result);
   });
+});
 
+router.get('/category/:category', function(req,res,next){
+  db.query('SELECT * FROM questions WHERE ?', req.params ,function(err, results){
+    if(err){
+      res.status(400).send(err);
+      return;
+    }
+    res.send(results);
+  });
+});
+
+router.delete('/:id',function(req,res,next){
+  db.query('DELETE FROM questions WHERE ?', {id:req.params.id}, function(err,result){
+    if(err){
+      res.status(400).send(err);
+      return;
+    }
+    res.send(result);
+  });
 });
 
 
