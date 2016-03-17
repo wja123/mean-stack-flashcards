@@ -1,12 +1,10 @@
 'use strict';
 
-(function($){
-  $(function(){
-
+$(document).ready(function(){
     $('.button-collapse').sideNav();
+});
 
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
+
 
 var app = angular.module("myApp",["ui.router"]);
 
@@ -37,4 +35,3 @@ $urlRouterProvider.otherwise("/");
 
 });
 
-console.log("module works");

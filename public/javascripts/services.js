@@ -3,49 +3,80 @@
 var app = angular.module("myApp");
 
 app.service('flashService', function($http) {
+    this.curQuest = [];
+    this.curQuestList = [];
+    this.numQuests=0;
 
-    this.getAll = function() {
-        console.log("getAll");
-        $http.get('/questions').then(function(res) {
-            console.log(res);
-            this.allQs = res;
-        }, function(err) {
+    this.getAll = () => {
+        $http.get('/questions').then(res => {
+            this.allQs = res.data;
+        }, err => {
             if (err) {
                 console.log(err);
             }
         });
     };
 
-    this.getById = function(id) {
-        return $http.get(`/questions/question/${id}`);
+    this.getById = (id) => {
+        $http.get(`/questions/question/${id}`).then(res => {
+            this.curQuest = res.data;
+        }, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     };
 
-    this.create = function(newQuestion) {
-        return $http.post('/questions', newQuestion);
+    this.create = (newQuestion) => {
+        $http.post('/questions', newQuestion).then(res => {
+            console.log("success");
+        }, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     };
 
-    this.getCats =()=> {
+    this.getCats = () => {
         $http.get('/questions/categories').then(res => {
             console.log(res);
             this.categories = res.data;
-        }, err=>{
+        }, err => {
             if (err) {
                 console.log(err);
             }
         });
-
     };
 
-    this.update = function(editQuestion) {
-        return $http.put(`/questions/${editQuestion.id}`, editQuestion);
+    this.update = (editQuestion) => {
+        $http.put(`/questions/${editQuestion.id}`, editQuestion).then(res => {
+            console.log("success");
+        }, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     };
 
-    this.getByCat = function(category) {
-        return $http.get(`questions/category/${category}`);
+    this.getByCat = (category) => {
+        $http.get(`questions/category/${category}`).then(res => {
+            this.curQuestList = res.data;
+            this.numQuests = res.data.length;
+        }, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     };
 
-    this.delete = function(question) {
-        return $http.delete(`/questions/${question.id}`);
+    this.deleteQuestion = function(question) {
+        $http.delete(`/questions/${question.id}`).then(res => {
+            console.log("Successfully deleted");
+        }, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     };
 
 });
