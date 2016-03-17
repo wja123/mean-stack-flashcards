@@ -4,7 +4,7 @@ var db = require("../config/db");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    db.query('SELECT * FROM user', function(err, usernames) {
+    db.query('SELECT * FROM user ORDER BY score DESC', function(err, usernames) {
         if (err) {
             res.status(400).send(err);
             return;
