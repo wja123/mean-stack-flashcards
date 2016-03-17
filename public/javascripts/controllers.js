@@ -25,6 +25,11 @@ app.controller("mainCtrl", function($scope, $state, flashService, userService) {
         $scope.revAns = true;
     }
 
+    $scope.returnToHome = function() {
+        $scope.flashShow = false;
+        $scope.revAns = false;
+    }
+
     $scope.nextAns = function(val) {
         var curIndex = $scope.questionsList.indexOf(val);
         console.log(val);
