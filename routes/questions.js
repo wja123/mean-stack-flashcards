@@ -17,7 +17,7 @@ router.get('/',function(req,res,next){
   });
 });
 
-router.get('/:id',function(req,res,next){
+router.get('/question/:id',function(req,res,next){
   db.query('SELECT * FROM questions WHERE ?', {id:req.params.id}, function(err,row,fields){
     if(err){
       res.status(400).send(err);
@@ -40,6 +40,7 @@ router.post('/',function(req,res,next){
 });
 
 router.get('/categories',function(req,res,next){
+  console.log("categories");
   db.query('SELECT DISTINCT category FROM questions', function(err,row,fields){
     if(err){
       res.status(400).send(err);
